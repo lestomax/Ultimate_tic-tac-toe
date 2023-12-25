@@ -11,8 +11,8 @@ class Grid:
         g = Grid()
         for i in range(9):
             for j in range(9):
-                g.entiere = self.entiere
-            g.gros = self.gros
+                g.entiere[i][j] = self.entiere[i][j]
+            g.gros[i] = self.gros[i]
         g.evaluation = self.evaluation
         g.fini = self.fini
         return g
@@ -92,18 +92,23 @@ class Grid:
                     for l in range(3):
                         n = self.entiere[i*3+k][j*3+l]
                         if n == -1:
-                            print(self.entiere[i*3+k][j*3+l],end=" ")
+                            print(n,end=" ")
                         else:
-                            print("",self.entiere[i*3+k][j*3+l],end=" ")
+                            print("",n,end=" ")
                     print("|",end=" ")
                 print()
             print("------------------------------")
+        print()
 
     def affiche_tic_tac_toe(self,tab:list[int]):
         for i in range(3):
             for j in range(3):
-                print(tab[i*3+j], end=" ")
+                if tab[i*3+j] ==-1:
+                    print(tab[i*3+j], end=" ")
+                else:
+                    print("",tab[i*3+j],end=" ")
             print()
+        print()
 
 class Joueur:
     def __init__(self,fun:callable,id:int):
@@ -112,7 +117,7 @@ class Joueur:
         self.id = id
     
     def joue(self,grid:Grid,case:int):
-        g,p=self.fun(grid,self.id,case)
+        g,p=self.fun(grid,self,case)
         grid.set(g,p,self)
         if grid.gros[p]== 0:
             return p

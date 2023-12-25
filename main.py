@@ -1,5 +1,5 @@
 from fun_joueurs import *
 
-j1=jeu_random
-j2 = jeu_random
+j1 = minmax
+j2 = minmax
 jeu(j1,j2)
