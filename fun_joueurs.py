@@ -60,6 +60,6 @@ def minmax(grid:Grid,j1:Joueur,case:int,p1 = 4):
                         couple = (i,j)
         if plage == p1 : 
             assert c != -inf, "je ne peux aller nulle part"
-            return couple #il est toujours defini car c != inf, donc c à été changé et couple a été defini
+            return couple #il est toujours defini car c != inf, donc c à été changé et couple a été defini 
         return c
     return aux1(grid,j1,case)
