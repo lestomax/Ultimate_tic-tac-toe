@@ -91,22 +91,28 @@ class Grid:
                 for k in range(3):
                     for l in range(3):
                         n = self.entiere[i*3+k][j*3+l]
-                        if n == -1:
-                            print(n,end=" ")
+                        if n ==-1:
+                            print("O", end=" ")
+                        elif n == 1:
+                            print("X",end=" ")
                         else:
-                            print("",n,end=" ")
+                            print("_",end=" ")
                     print("|",end=" ")
                 print()
-            print("------------------------------")
+            print("-----------------------")
         print()
 
     def affiche_tic_tac_toe(self,tab:list[int]):
         for i in range(3):
             for j in range(3):
                 if tab[i*3+j] ==-1:
-                    print(tab[i*3+j], end=" ")
+                    print("O", end=" ")
+                elif tab[i*3+j] == 1:
+                    print("X",end=" ")
+                elif tab[i*3+j] == 0:
+                    print("_",end=" ")
                 else:
-                    print("",tab[i*3+j],end=" ")
+                    print("|",end=" ")
             print()
         print()
 
