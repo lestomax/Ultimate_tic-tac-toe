@@ -26,10 +26,13 @@ L'objectif de ce projet est de tester plusieurs algorithmes de résolution de je
 Quelle est la meilleure stratégie pour gagner un maximum de parties de Méga Morpion?
 
 ## Objectifs du TIPE : 
-Trouver les meilleures stratégies pour gagner aux jeux
-Optimiser les algorithmes
-Faire plusieurs simulations entre les différentes stratégies
-Permettre à un joueur lambda de s'entraîner contre ces algorithmes afin de s'améliorer au jeu
+1. Trouver les meilleures stratégies pour gagner aux jeux
+
+2. Optimiser les algorithmes
+
+3. Faire plusieurs simulations entre les différentes stratégies
+
+4. Permettre à un joueur lambda de s'entraîner contre ces algorithmes afin de s'améliorer au jeu
 
 ## Références bibliographiques : 
 [1] Addison, B., Peeler, M., & Alvin, C. (2022, May). Ultimate Tic-Tac-Toe Bot Techniques. In The International FLAIRS Conference Proceedings (Vol. 35).
