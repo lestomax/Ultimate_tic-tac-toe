@@ -3,7 +3,7 @@ Après avoir été séduite par les différents paramètres à prendre en consid
 Le jeu rentre de par sa nature dans le cadre du thème de cette année, puisqu'il constitue une version améliorée, et intéressante dans le cadre de notre problème du jeu auquel chaque enfant a déjà joué : le morpion. 
 
 ## Positionnements thématiques:
-INFORMATIQUES (Jeux), INFORMATIQUES (Structures de données : arbres) INFORMATIQUE (Algorithmie), Informatiques (optimisation)
+INFORMATIQUES (Informatique théorique), INFORMATIQUES (Informatique pratique) 
 
 ### Mots-clés (en français) : 
 Méga-morpion
