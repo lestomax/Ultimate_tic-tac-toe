@@ -142,7 +142,7 @@ def jeu(j1:callable,j2:callable):
             case = j2.joue(grid,case)
             grid.affiche_entiere()
             grid.affiche_tic_tac_toe(grid.gros)
-    assert grid.evaluation % 100 == 0, "La partie n'est pas finie" #et si égalité ???
+    assert grid.evaluation % 100 == 0, "La partie n'est pas finie"
     print("Gagnant :",grid.evaluation//100)
     return grid.evaluation//100
 

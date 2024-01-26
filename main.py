@@ -71,4 +71,4 @@ def ab_4_rand__1000(): #96.45
     for i in range(1000):
         c+=jeu(j1,jeu_random)+1
     print(c/20)
-ab_4_rand__1000()
+ab_ab_6()
