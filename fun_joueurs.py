@@ -114,7 +114,6 @@ def alphabeta(grid:Grid,j1:Joueur,case:int,profondeur = 4):
         return alpha
     return aux1(grid,j1,case,profondeur)
 
-N=0
 def montecarlo(grid:Grid,j1:Joueur,case:int,n_iter = 500,c:int=sqrt(2)):
     """At least n_iter = 81"""
     joueur = j1.id
@@ -128,8 +127,6 @@ def montecarlo(grid:Grid,j1:Joueur,case:int,n_iter = 500,c:int=sqrt(2)):
             self.chemin_fils:list[tuple]=[]
             self.case_suivante=cas
             self.joueur=j
-            self.id=N+1
-            N+=1
         def genere_fils(self):
             case = self.case_suivante
             if case == -1: #si nous avons le choix total de la case
@@ -184,7 +181,6 @@ def montecarlo(grid:Grid,j1:Joueur,case:int,n_iter = 500,c:int=sqrt(2)):
     for i in range(n_iter):
         while not current.est_feuille():
             current = current.choix_fils()
-            assert 0<current.id <=len(racine.fils) or not current in [a.id for a in chemin]
             chemin.append(current)
         if current.nb_passage == 0 :
             resultat=rollout(current)
