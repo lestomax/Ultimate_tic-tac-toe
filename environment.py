@@ -4,10 +4,10 @@ class Grid:
     def __init__(self):
         self.entiere=[[0 for i in range(9)]for j in range(9)]
         self.gros = [0 for i in range(9)]
-        self.evaluation = 0
-        self.fini = False
+        self.evaluation = 0 #heuristique
+        self.fini = False #état final / terminal
 
-    def copy(self):
+    def copy(self): #nous permettra de simuler sans perdre l'ancienne grille
         g = Grid()
         for i in range(9):
             for j in range(9):
@@ -40,7 +40,7 @@ class Grid:
         return True
     
     def diag_gagnante(self, case:int, tab:list[int]):
-        assert case%2 == 0 , "pas dans la diagonale"
+        assert case%2 == 0 , "pas dans une diagonale"
         joueur:int = self.get_case(case, tab)
         drap = True
         for i in [0,4,8]:
@@ -54,38 +54,42 @@ class Grid:
         return not drap
     
     def gagnant(self,case:int,tab:list[int]):
+        """Vérifie si la case est gagnée sachant que l'on vient de jouer dans case"""
         return self.ligne_gagnante(case,tab) or self.col_gagnante(case,tab) or (case%2==0 and self.diag_gagnante(case,tab))
 
     def rempli(self,tab:list[int]):
+        """Vérifie si la case est entièrement remplie dans le tableau"""
         for i in tab:
             if i == 0 :
                 return False
         return True
     
     def set(self,grande_case:int,petite_case:int,joueur):
+        """Fait 1 action : un joueur joue son tour"""
         assert self.get_case(grande_case,self.gros)==0, "case déjà finie"
         assert self.get_petite_case(grande_case,petite_case)==0, "case déjà remplie"
         j = joueur.id
         assert j in [-1,1], "ce n'est pas un joueur"
         assert not self.fini
         self.entiere[grande_case][petite_case]=j
-        if self.gagnant(petite_case,self.entiere[grande_case]):
+        if self.gagnant(petite_case,self.entiere[grande_case]): #si on gagne une petite grille
             self.gros[grande_case] = j
             self.evaluation+= j*10
-            if self.gagnant(grande_case,self.gros) :
+            if self.gagnant(grande_case,self.gros) : #on gagne
                 self.fini = True
                 self.evaluation = j*100
-            elif self.rempli(self.gros):
+            elif self.rempli(self.gros): #egalité
                 self.fini = True
                 self.evaluation = 0
         else:
-            if self.rempli(self.entiere[grande_case]) :
+            if self.rempli(self.entiere[grande_case]) : #la petite grille est remplie sans être gagnée
                 self.gros[grande_case]=2
-                if self.rempli(self.gros):
+                if self.rempli(self.gros):#egalité
                     self.fini = True
                     self.evaluation = 0
 
     def affiche_entiere(self):
+        """Affiche grille méga morpion"""
         for i in range(3):
             for j in range(3):
                 for k in range(3):
@@ -103,6 +107,7 @@ class Grid:
         print()
 
     def affiche_tic_tac_toe(self,tab:list[int]):
+        """Affiche grille morpion"""
         for i in range(3):
             for j in range(3):
                 if tab[i*3+j] ==-1:
@@ -119,7 +124,7 @@ class Grid:
 class Joueur:
     def __init__(self,fun:callable,id:int):
         assert id in [-1,1]
-        self.fun = fun
+        self.fun = fun #prend une grille,un joueur et une petite grille(pg) (où l'on doit jouer), et renvoie la pg où on joue et la petite case
         self.id = id
     
     def joue(self,grid:Grid,case:int):
@@ -129,21 +134,23 @@ class Joueur:
             return p
         return -1
 
-def jeu(j1:callable,j2:callable):
-    j1=Joueur(j1,1)
-    j2=Joueur(j2,-1)
-    grid = Grid()
+def jeu(j1:callable,j2:callable,grid=Grid(),ordre=1,affichage_grille=True,affichage_gagnant=True):
+    j1=Joueur(j1,1*ordre)
+    j2=Joueur(j2,-1*ordre)
     case = -1
     while not grid.fini :
         case = j1.joue(grid,case)
-        grid.affiche_entiere()
-        grid.affiche_tic_tac_toe(grid.gros)
-        if not grid.fini:
-            case = j2.joue(grid,case)
+        if affichage_grille:
             grid.affiche_entiere()
             grid.affiche_tic_tac_toe(grid.gros)
+        if not grid.fini:
+            case = j2.joue(grid,case)
+            if affichage_grille:
+                grid.affiche_entiere()
+                grid.affiche_tic_tac_toe(grid.gros)
     assert grid.evaluation % 100 == 0, "La partie n'est pas finie"
-    print("Gagnant :",grid.evaluation//100)
+    if affichage_gagnant:
+        print("Gagnant :",grid.evaluation//100)
     return grid.evaluation//100
 
 
