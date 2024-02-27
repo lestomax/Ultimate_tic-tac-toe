@@ -64,14 +64,15 @@ def ab_4_rand__1000(): #96.45
 
 def montecarlo_alpha_beta():
     d={}
-    for const in range(0,100,2):
-        const = const/10
+    for const in range(1000,2000,1):
+        const = const/1000
         d[const]=0
-        for i in range(100):
-            if jeu(partial(montecarlo,c=const),partial(alphabeta,profondeur=5),affichage_gagnant=False,affichage_grille=False) ==1:
+        for _ in range(1000):
+            if jeu(partial(montecarlo,c=const,n_iter=100),partial(alphabeta,profondeur=3),affichage_gagnant=False,affichage_grille=False) !=-1:
                 d[const]+=1
+                
     print(d)
 
-#montecarlo_alpha_beta()
+montecarlo_alpha_beta()
 #ab_ab_5__min_min_5()
-jeu(partial(montecarlo,),partial(alphabeta,profondeur=5))
+#jeu(partial(montecarlo,n_iter=100),partial(alphabeta,profondeur=3))

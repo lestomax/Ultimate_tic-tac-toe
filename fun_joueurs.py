@@ -115,7 +115,7 @@ def alphabeta(grid:Grid,j1:Joueur,case:int,profondeur = 4):
     return aux1(grid,j1,case,profondeur)
 
 def montecarlo(grid:Grid,j1:Joueur,case:int,n_iter = 500,c:int=sqrt(2)):
-    """At least n_iter = 81"""
+    assert n_iter >= 81, "minimum n_iter = 81"
     joueur = j1.id
     class Arbre:
         def __init__(self,val:Grid,j=j1,cas=case) -> None:
@@ -127,7 +127,7 @@ def montecarlo(grid:Grid,j1:Joueur,case:int,n_iter = 500,c:int=sqrt(2)):
             self.chemin_fils:list[tuple]=[]
             self.case_suivante=cas
             self.joueur=j
-        def genere_fils(self):
+        def genere_fils(self) -> None:
             case = self.case_suivante
             if case == -1: #si nous avons le choix total de la case
                 for i in range(9):
@@ -155,12 +155,12 @@ def montecarlo(grid:Grid,j1:Joueur,case:int,n_iter = 500,c:int=sqrt(2)):
                             place = -1
                         self.fils.append(Arbre(g,Joueur(self.joueur.fun,-self.joueur.id),place))
                         self.chemin_fils.append((i,j))
-        def est_feuille(self):
+        def est_feuille(self) -> bool:
             return not bool(self.fils)
         
     racine:Arbre = Arbre(grid)
     racine.genere_fils()
-    def choix_fils(self):
+    def choix_fils(self) -> Arbre:
         assert not self.est_feuille()
         m=-inf
         for fils in self.fils:
@@ -174,35 +174,46 @@ def montecarlo(grid:Grid,j1:Joueur,case:int,n_iter = 500,c:int=sqrt(2)):
     Arbre.choix_fils=choix_fils
     
     current:Arbre = racine
-    def rollout(arbre:Arbre):
-        return jeu(jeu_random,jeu_random,arbre.grille.copy(),arbre.joueur.id,affichage_gagnant=False,affichage_grille=False)*joueur
 
-    chemin = [racine]
+    def rollout(arbre:Arbre) -> int:
+        resultat = jeu(jeu_random,jeu_random,arbre.grille.copy(),arbre.joueur.id,affichage_gagnant=False,affichage_grille=False)
+        if joueur ==-1:
+            resultat = -resultat
+        return (resultat + 1)/2
+
+    chemin:list[Arbre] = [racine]
     for i in range(n_iter):
+
+        #Selection
         while not current.est_feuille():
-            current = current.choix_fils()
+            current:Arbre = current.choix_fils()
             chemin.append(current)
-        if current.nb_passage == 0 :
-            resultat=rollout(current)
-        else:
-            current.genere_fils()
+        
+        #Expansion
+        if current.nb_passage != 0 :
+            current.genere_fils() 
             if not current.est_feuille():
                 current=current.fils[0]
-            resultat=rollout(current)
+                chemin.append(current)
+        #Simulation
+        resultat=rollout(current)
+    
         current = racine
+        #Backpropagation
         for arbre in chemin:
             arbre.nb_passage+=1
             arbre.val+=resultat
+        
+        chemin = [racine]
+    
+    #Choix de la meilleure option
     m=-inf
     i=0
     n=-1
-    somme = 0
     for a in racine.fils:
-        somme+=a.nb_passage
         if a.val/a.nb_passage > m :
             m = a.val/a.nb_passage
             arbre = a
             n = i
         i+=1
-    print(somme)
     return racine.chemin_fils[n]
