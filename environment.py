@@ -63,7 +63,7 @@ class Grid:
             if i == 0 :
                 return False
         return True
-    
+
     def set(self,grande_case:int,petite_case:int,joueur):
         """Fait 1 action : un joueur joue son tour"""
         assert self.get_case(grande_case,self.gros)==0, "case déjà finie"

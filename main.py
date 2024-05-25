@@ -62,17 +62,26 @@ def ab_4_rand__1000(): #96.45
         c+=jeu(j1,jeu_random)+1
     print(c/20)
 
+def ab_7_ab_6_opti(): #200
+    t=time()
+    j1=partial(alpha_beta_opti,profondeur=7)
+    j2=partial(alpha_beta_opti,profondeur=6)
+    jeu(j1,j2)
+    t2=time()-t
+    print(t2)
+
 def montecarlo_alpha_beta():
     d={}
+    s=0
     for const in range(1000,2000,1):
         const = const/1000
         d[const]=0
         for _ in range(1000):
-            if jeu(partial(montecarlo,c=const,n_iter=100),partial(alphabeta,profondeur=3),affichage_gagnant=False,affichage_grille=False) !=-1:
+            if jeu(partial(montecarlo,c=const,n_iter=100,strategie=partial(alphabeta,profondeur=3)),partial(alphabeta,profondeur=5),affichage_gagnant=False,affichage_grille=False) !=-1:
                 d[const]+=1
-                
+                s+=1
     print(d)
+    print(s)
 
-montecarlo_alpha_beta()
-#ab_ab_5__min_min_5()
-#jeu(partial(montecarlo,n_iter=100),partial(alphabeta,profondeur=3))
+#montecarlo_alpha_beta()
+ab_7_ab_6_opti()
