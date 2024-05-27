@@ -69,7 +69,7 @@ def alphabeta(grid:Grid,j1:Joueur,case:int,profondeur = 4):
     assert not grid.fini
     def aux1(grid:Grid,j1:Joueur,case:int,plage = 4,alpha = -inf,beta = inf):
         joueur = j1.id
-        if grid.fini or plage == 0:
+        if grid.fini or plage == 0: #on a atteint une feuille (la profondeur)
             return grid.evaluation*joueur
         #parcours des fils
         if case == -1: #si nous avons le choix total de la case
@@ -108,10 +108,10 @@ def alphabeta(grid:Grid,j1:Joueur,case:int,profondeur = 4):
                     elif alpha < -value:
                         alpha = -value 
                         couple = (i,j)
-        if plage == profondeur : 
+        if plage == profondeur : #on a fini l'exploration et on est à la racine, dans ce cas on envoie où aller
             assert alpha != -inf, "je ne peux aller nulle part"
             return couple #il est toujours defini car c != inf, donc c à été changé et couple a été defini 
-        return alpha
+        return alpha #si on n'a pas fini on renvoie le meilleur coup trouvé jusque maintenant
     return aux1(grid,j1,case,profondeur)
 
 def alpha_beta_opti(grid:Grid,j1:Joueur,case:int,profondeur = 4):
@@ -225,7 +225,7 @@ def montecarlo(grid:Grid,j1:Joueur,case:int,n_iter = 500,c:int=sqrt(2),strategie
         for fils in self.fils:
             if fils.nb_passage == 0:
                 return fils
-            ucb=(fils.val/fils.nb_passage)+c*sqrt(log(racine.nb_passage)/fils.nb_passage)
+            ucb=(fils.val/fils.nb_passage)+c*sqrt(log(self.nb_passage)/fils.nb_passage)
             if ucb>m :#UCB1
                 f=fils
                 m=ucb
@@ -238,16 +238,17 @@ def montecarlo(grid:Grid,j1:Joueur,case:int,n_iter = 500,c:int=sqrt(2),strategie
         resultat = jeu(strategie,strategie,arbre.grille.copy(),arbre.joueur.id,affichage_gagnant=False,affichage_grille=False)
         if joueur ==-1:
             resultat = -resultat
-        return (resultat + 1)/2
+        return (resultat + 1)//2
 
     chemin:list[Arbre] = [racine]
     for i in range(n_iter):
+
+        #print([(racine.fils[i].val,racine.fils[i].nb_passage) for i in range(len(racine.fils))])
 
         #Selection
         while not current.est_feuille():
             current:Arbre = current.choix_fils()
             chemin.append(current)
-        
         #Expansion
         if current.nb_passage != 0 :
             current.genere_fils() 

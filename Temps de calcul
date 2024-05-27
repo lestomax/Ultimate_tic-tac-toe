@@ -1,0 +1,18 @@
+Voici le temps de calcul des différents algorithmes :
+Aléatoire : 0.0005979537963867188
+Minmax profondeur 1 : 0.006508588790893555
+Minmax profondeur 3 : 0.6294529438018799
+Minmax profondeur 5 : 85.89917540550232
+AlphaBeta profondeur 1 : 0.006456971168518066
+AlphaBeta profondeur 3 : 0.11484801769256592
+AlphaBeta profondeur 5 : 2.217844009399414
+AlphaBeta profondeur 7 : 33.93953454494476
+AlphaBeta (avec tri des enfants) profondeur 1 : 0.0063860416412353516
+AlphaBeta (avec tri des enfants) profondeur 3 : 0.12222301959991455
+AlphaBeta (avec tri des enfants) profondeur 5 : 2.2569245100021362
+AlphaBeta (avec tri des enfants) profondeur 7 : 33.55529761314392
+MCTS 100 itérations : 1.036149024963379
+MCTS 500 itérations : 5.269740343093872
+MCTS 1000 itérations : 9.740904569625854
+MCTS 2000 itérations : 21.44651460647583
+
