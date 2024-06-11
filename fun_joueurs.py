@@ -178,12 +178,11 @@ def montecarlo(grid:Grid,j1:Joueur,case:int,n_iter = 500,c:int=sqrt(2),strategie
     joueur = j1.id
     class Arbre:
         def __init__(self,val:Grid,j=j1,cas=case) -> None:
-            global N
-            self.grille:Grid=val
-            self.nb_passage=0
-            self.val=0
-            self.fils:list[Arbre]=[]
-            self.chemin_fils:list[tuple]=[]
+            self.grille:Grid = val
+            self.nb_passage = 0
+            self.val = 0
+            self.fils:list[Arbre] = []
+            self.chemin_fils:list[tuple] = [] #coup menant aux fils
             self.case_suivante=cas
             self.joueur=j
         def genere_fils(self) -> None:
@@ -221,7 +220,7 @@ def montecarlo(grid:Grid,j1:Joueur,case:int,n_iter = 500,c:int=sqrt(2),strategie
     racine.genere_fils()
     def choix_fils(self) -> Arbre:
         assert not self.est_feuille()
-        m=-inf
+        m = -inf
         for fils in self.fils:
             if fils.nb_passage == 0:
                 return fils
@@ -242,8 +241,6 @@ def montecarlo(grid:Grid,j1:Joueur,case:int,n_iter = 500,c:int=sqrt(2),strategie
 
     chemin:list[Arbre] = [racine]
     for i in range(n_iter):
-
-        #print([(racine.fils[i].val,racine.fils[i].nb_passage) for i in range(len(racine.fils))])
 
         #Selection
         while not current.est_feuille():
