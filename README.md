@@ -35,7 +35,7 @@ Il faut gagner le morpion de cette grande case.
 
 * MinMax 
 * AlphaBeta
-* Recherche arborescante Monte-Carlo (MCTS) (pas sûre)
+* Recherche arborescante Monte-Carlo (MCTS)
 
 ## English
 ### Introduction
@@ -74,4 +74,4 @@ You need to win the Tic-Tac-Toe grid within that big cell.
 
 * MinMax 
 * AlphaBeta
-* Monte-Carlo Tree Search (MCTS) (not sure)
+* Monte-Carlo Tree Search (MCTS) 
